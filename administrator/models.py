@@ -10,8 +10,8 @@ class LessonRoom(models.Model):
 
 
 # teacher
-class SalaryType(models.Model):
-    type = models.IntegerField()
+# class SalaryType(models.Model):
+#     type = models.IntegerField()
 
 
 # teacher
@@ -30,7 +30,7 @@ class Lesson(models.Model):
 class EmployeeWork(models.Model):
     filial = models.ForeignKey(Filial, on_delete=models.SET_NULL, null=True)
     employee = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
-    salary_type = models.ForeignKey(SalaryType, on_delete=models.SET_NULL, null=True)
+    # salary_type = models.ForeignKey(SalaryType, on_delete=models.SET_NULL, null=True)
 
 
 # teacher
@@ -40,6 +40,7 @@ class Group(models.Model):
     name = models.CharField(max_length=255)
     lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True)
     is_active = models.BooleanField(default=False)
+    teacher_per = models.IntegerField()
 
 
 class LessonTime(models.Model):
