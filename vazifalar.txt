@@ -1,0 +1,7 @@
+
+administrator:
+    student - create, update, read, delete
+    employee - create, update, read, delete
+    lessons  - create, update, read, delete
+    room - create, update, read, delete
+
