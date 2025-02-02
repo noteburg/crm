@@ -24,8 +24,10 @@ class Employee(AbstractUser):
 
         ),  default='3', max_length=10)
 
-    filial = models.ForeignKey(Filial, on_delete=models.SET_NULL,null=True)
     is_active = models.BooleanField(default=True)
+
+    def get_role(self):
+        return self.role
 
 class CleanerEmployee(models.Model):
     first_name = models.CharField(255)

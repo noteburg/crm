@@ -29,6 +29,7 @@ class Lesson(models.Model):
 
 class EmployeeWork(models.Model):
     filial = models.ForeignKey(Filial, on_delete=models.SET_NULL, null=True)
+    employee = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
     salary_type = models.ForeignKey(SalaryType, on_delete=models.SET_NULL, null=True)
 
 
