@@ -39,7 +39,11 @@ class Group(models.Model):
     teacher = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=255)
     lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True)
-    is_active = models.BooleanField(default=False)
+    status = models.CharField(choices=(
+        ('1', 'not started'),
+        ('2', 'active'),
+        ('3', 'inactive')
+    ), max_length=1)
     teacher_per = models.IntegerField()
 
 
@@ -60,8 +64,8 @@ class Student(models.Model):
 
 # student
 class GroupStudent(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True)
-    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True)
+    student = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True, related_name="groups")
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, related_name="students")
     is_active = models.BooleanField(default=False)
     is_privilege = models.BooleanField(default=False)
 
