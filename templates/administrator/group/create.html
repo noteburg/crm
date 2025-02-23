@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+              <div class="col">
+                  <div class="card">
+                      <div class="card-header">
+                          <strong>Create group</strong>
+                      </div>
+                      <div class="card-body card-block">
+                          <form action="{% url 'administrator:create-group' %}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                              {% csrf_token %}
+                              <div class="row form-group">
+                                <div class="col col-md-3"><label for="name" class=" form-control-label">
+                                        Name</label></div>
+                                <div class="col-12 col-md-9"><input type="text" id="name" name="name"
+                                                                     class="form-control"></div>
+                              </div>
+
+                              <div class="row form-group">
+                                <div class="col col-md-3"><label for="teacher" class=" form-control-label">Ustozlar</label></div>
+                                <div class="col-12 col-md-9">
+                                    <select id="teacher" name="teacher" class="form-control">
+                                        {% for teacher in teachers %}
+                                        <option selected value="{{ teacher.id }}">{{ teacher.first_name }} {{ teacher.last_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                              </div>
+
+                              <div class="row form-group">
+                                <div class="col col-md-3"><label for="lesson" class=" form-control-label">Darslar</label></div>
+                                <div class="col-12 col-md-9">
+                                    <select id="lesson" name="lesson" class="form-control">
+                                        {% for lesson in lessons %}
+                                        <option value="{{ lesson.id }}">{{ lesson.name }} {{ lesson.type}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                              </div>
+
+                              <div class="row form-group invisible">
+                                <div class="col col-md-3"><label for="filial" class=" form-control-label">Filial</label></div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" value="{{ filial.id }}" id="filial" name="filial"
+                                                                     class="form-control">
+                                </div>
+                              </div>
+
+                              <div class="row form-group">
+                                 <div class="col-4">
+                                  <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                      Saqlash
+                                  </button>
+                                 </div>
+                              </div>
+                          </form>
+                      </div>
+
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

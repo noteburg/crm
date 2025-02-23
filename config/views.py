@@ -2,12 +2,15 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 from administrator import service
-# from employee.models import Employee
+from employee.models import Employee
 
 class HomePageView(View):
     def get(self, request):
         if request.user.is_authenticated:
-            print(True)
+            filial = service.get_admin_filial(admin=request.user)
+            print(filial.name)
+            # print(dir(req uest.user.filial))
+            # print(request.user.filial)
         else:
             print(False)
         return render(request, 'index.html')

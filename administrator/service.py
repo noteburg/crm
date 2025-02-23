@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404
+
 from administrator.models import EmployeeWork, Student, Group, Lesson, GroupStudent
 from employee.models import Employee, Filial
 
@@ -22,6 +24,9 @@ def get_filial_with_id(id):
 
 # funks for filial model end
 
+def get_admin_filial(admin:Employee):
+    filial = get_object_or_404(EmployeeWork, employee=admin)
+    return filial.filial
 
 # funks for Employee model start
 def create_employee(username:str, password:str, first_name:str, last_name:str,  role:str):
@@ -58,6 +63,13 @@ def create_student(first_name:str, last_name:str, phone:str):
         )
         return True
 
+def set_student_to_group(student:Student, group:Group):
+    if isinstance(student, Student) and isinstance(group, Group):
+        GroupStudent.objects.create(
+            student=student,
+            group=group
+        )
+
 def get_student_with_id(id):
     """Student modelidan id orqali studentni olish"""
     return Student.objetcs.get(id=id)
@@ -70,9 +82,9 @@ def get_all_active_students():
         students.extend(group.students.filter(is_active=True))
     return students
 
-def get_all_students():
+def get_all_students_from_filial(filial):
     """Student modelidan barcha studentlarni olish"""
-    return Student.objects.all()
+    return Student.objects.filter(filial=filial)
 
 # funks for student model end
 
@@ -110,12 +122,34 @@ def get_not_started_groups():
 def get_inactive_groups():
     return Group.objects.filter(status='3')
 
-def get_all_groups():
+def get_all_groups_from_filial(filial:Filial, status=None):
     """Group modelidan barcha guruhlarni qaytaradi"""
-    return Group.objects.all()
+
+    if status is None or 0:
+        return Group.objects.filter(filial=filial)
+    return Group.objects.filter(filial=filial, status=status)
 
 def get_active_students_from_group(group:Group):
     """guruhdan active studentlarni olish"""
     return group.students.filter(is_iactive=True)
 
 # funks for group_student model end
+
+# funks for teachers from Employee model start
+
+def get_active_teachers_from_filial(filial:Filial):
+
+    if filial:
+
+        teachers = Employee.objects.filter(
+            filial__filial=filial,
+            role='3',
+            is_active=True
+        )
+        return teachers
+    return Employee.objects.none()
+
+
+
+def get_all_lessons_from_filial(filial:Filial):
+    return Lesson.objects.filter(filial=filial)

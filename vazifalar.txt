@@ -1,7 +1,8 @@
 
 administrator:
-    student - create, update, read, delete
+    student - create + , update, read, delete
     employee - create, update, read, delete
     lessons  - create, update, read, delete
-    room - create, update, read, delete
-    group - create, update, read, delete
+    lesson_time  - create + , update, read, delete
+    room - create + , update, read, delete
+    group - create + , update, read, delete

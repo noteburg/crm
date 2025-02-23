@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+
+{% endblock css %}
+{% block content %}
+        <div class="content">
+            <!-- Animated -->
+            <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Guruhlar jadvali</strong>
+                            </div>
+
+                            <div class="card-header">
+                                <form method="get" id="filterForm" class="form-inline mb-3">
+                                    <label for="status" class="mr-2 font-weight-bold">Filter</label>
+                                    <select name="status" id="status" class="form-control mr-2" onchange="document.getElementById('filterForm').submit();">
+                                        <option {% if status == '0' %}selected{% endif %} value="all" >All</option>
+                                        <option {% if status == '1' %}selected{% endif %} value="1">Not Started</option>
+                                        <option {% if status == '2' %}selected{% endif %} value="2" >Active</option>
+                                        <option {% if status == '3' %}selected{% endif %} value="3" >Inactive</option>
+                                    </select>
+                                </form>
+
+                            </div>
+
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                          <th scope="col">#</th>
+                                          <th scope="col">Nomi</th>
+                                          <th scope="col">Ustoz</th>
+                                          <th scope="col">Dars nomi</th>
+                                          <th scope="col">Dars turi</th>
+                                          <th scope="col">Status</th>
+
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% for group in groups %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{group.name}}</td>
+                                        <td>{{group.teacher}}</td>
+                                        <td>{{group.lesson.name}}</td>
+                                        <td>{{group.lesson.lesson_type.type}}</td>
+                                        <td>{{group.get_status_display}}</td>
+                                        <td>
+                                            <a href="#"><span class="ti-pencil text-primary"></span></a>
+                                            <a href="#"><span class="ti-trash text-danger"></span></a>
+                                        </td>
+
+
+
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            <!-- .animated -->
+        </div>
+{% endblock content %}

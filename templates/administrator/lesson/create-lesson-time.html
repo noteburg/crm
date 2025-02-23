@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+              <div class="col">
+                  <div class="card">
+                      <div class="card-header">
+                          <strong>Create Lesson Time</strong>
+                      </div>
+                      <div class="card-body card-block">
+                          <form action="{% url 'administrator:create-lesson-time' %}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                              {% csrf_token %}
+
+                              <div class="row form-group">
+<!--                                        <div class="col col-md-3"><label class=" form-control-label">Guruhlar</label></div>-->
+<!--                                        <div class="col-12 col-md-9">-->
+<!--                                            <select name="room" class="form-control">-->
+<!--                                                {% for group in groups %}-->
+<!--                                                <option value="{{ group.id }}">{{ group.name }}</option>-->
+<!--                                                {% endfor %}-->
+<!--                                            </select>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="row form-group">-->
+<!--                                        <div class="col col-md-3"><label for="email-input" class=" form-control-label">Day</label></div>-->
+<!--                                        <div class="col-12 col-md-9"><input type="text" id="email-input" name="date" placeholder="Enter Email" class="form-control"><small class="help-block form-text">Please enter your email</small></div>-->
+<!--                                    </div>-->
+<!--                                    <div class="row form-group">-->
+<!--                                        <div class="col col-md-3"><label for="password-input" class=" form-control-label">Start time</label></div>-->
+<!--                                        <div class="col-12 col-md-9"><input type="text" id="password-input" name="start_time" placeholder="Password" class="form-control"><small class="help-block form-text">Please enter a complex password</small></div>-->
+<!--                                    </div>-->
+<!--                                    <div class="row form-group">-->
+<!--                                        <div class="col col-md-3"><label for="disabled-input1" class=" form-control-label">End Time</label></div>-->
+<!--                                        <div class="col-12 col-md-9"><input type="text" id="disabled-input1" name="end_time" placeholder="Disabled" class="form-control"></div>-->
+<!--                                    </div>-->
+<!--                                    <div class="row form-group">-->
+<!--                                        <div class="col col-md-3"><label for="select" class=" form-control-label">Xonalar</label></div>-->
+<!--                                        <div class="col-12 col-md-9">-->
+<!--                                            <select name="room" id="select" class="form-control">-->
+<!--                                                {% for room in rooms %}-->
+<!--                                                <option value="{{ room.id }}">{{ room.name }}</option>-->
+<!--                                                {% endfor %}-->
+<!--                                            </select>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+
+
+<!--                              <div class="row form-group">-->
+<!--                                 <div class="col-4">-->
+<!--                                  <button type="submit" class="btn btn-primary btn-lg btn-block">-->
+<!--                                      Saqlash-->
+<!--                                  </button>-->
+<!--                                 </div>-->
+
+                                  <label for="group">Guruh:</label>
+        <select id="group" name="group" required>
+            {% for group in groups %}
+                <option value="{{ group.id }}">{{ group.name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <!-- Sana maydoni -->
+        <label for="date">Sana:</label>
+        <input type="date" id="date" name="date" required>
+        <br>
+
+        <!-- Boshlanish vaqti -->
+        <label for="start_time">Boshlanish vaqti:</label>
+        <input type="time" id="start_time" name="start_time" required>
+        <br>
+
+        <!-- Tugash vaqti -->
+        <label for="end_time">Tugash vaqti:</label>
+        <input type="time" id="end_time" name="end_time" required>
+        <br>
+
+        <!-- Xona maydoni -->
+        <label for="room">Xona:</label>
+        <select id="room" name="room" required>
+            {% for room in rooms %}
+                <option value="{{ room.id }}">{{ room.name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <!-- Submit tugmasi -->
+        <button type="submit">Yuborish</button>
+
+                              </div>
+                          </form>
+                      </div>
+
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
