@@ -70,6 +70,13 @@ def set_student_to_group(student:Student, group:Group):
             group=group
         )
 
+def get_groupstudent_with_id(group_id:GroupStudent):
+    return GroupStudent.objects.get(id=group_id)
+
+def set_active_student_in_group(group:GroupStudent, status:bool):
+    group.is_active = status
+    group.save()
+
 def get_student_with_id(id):
     """Student modelidan id orqali studentni olish"""
     return Student.objects.get(id=id)

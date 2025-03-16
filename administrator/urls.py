@@ -12,6 +12,7 @@ urlpatterns = [
     path('group/<int:group_id>/edit', views.GroupEditView.as_view(), name='edit-group'),
     path('group/table/', views.GroupTableView.as_view(), name='table-group'),
     path('group/<int:group_id>/students/', views.GroupStudentsTableView.as_view(), name='table-group-students'),
+    path('group/<int:group_id>/set-active-student/', views.GroupStudentSetActive.as_view(), name='group-student-set-active'),
     path('group/<int:group_id>/student/add', views.GroupStudentAddView.as_view(), name='add-student-group'),
     path('group/<int:group_id>/student/create', views.GroupStudentCreateView.as_view(), name='create-student-group'),
 

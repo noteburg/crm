@@ -97,14 +97,12 @@ class GroupStudentAddView(LoginRequiredMixin, View):
         group_to_save_student = service.get_group_with_id(group_id)
         groups = service.get_all_groups_from_filial(filial)
         selected_group_id = request.GET.get('group')
-        print(selected_group_id)
         if selected_group_id and int(selected_group_id) > 0:
             group = service.get_group_with_id(int(selected_group_id))
             students = service.get_all_students_from_group(group)
 
         else:
             students = service.get_all_students_from_filial(filial)
-
 
         context = {
             'group_id': group_to_save_student,
@@ -129,6 +127,17 @@ class GroupStudentAddView(LoginRequiredMixin, View):
                 set_student_to_group(student, group)
                 return redirect('administrator:table-group-students', group_id=group.id)
             return render(request, 'error.html')
+
+
+class GroupStudentSetActive(View):
+    def get(self, request, group_id):
+        group = service.get_groupstudent_with_id(group_id)
+        switch = request.GET.get('active')
+        if switch == 'True':
+            service.set_active_student_in_group(group, True)
+        elif switch == 'False':
+            service.set_active_student_in_group(group, False)
+        return redirect('administrator:table-group-students', group_id=group.group.id)
 
 
 class GroupStudentCreateView(View):
