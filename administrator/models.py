@@ -69,11 +69,11 @@ class Student(models.Model):
 class GroupStudent(models.Model):
     student = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True, related_name="groups")
     group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, related_name="students")
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     is_privilege = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.group.name} {self.student.first_name} {self.student.last_name}"
+        return f"{self.group.name}"
 
 class JournalAttendance(models.Model):
     student = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True)

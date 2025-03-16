@@ -72,7 +72,7 @@ def set_student_to_group(student:Student, group:Group):
 
 def get_student_with_id(id):
     """Student modelidan id orqali studentni olish"""
-    return Student.objetcs.get(id=id)
+    return Student.objects.get(id=id)
 
 def get_all_active_students():
     """Hozirgi mavjud guruhlardan o'quvchilarni olish"""
@@ -110,7 +110,18 @@ def get_group_with_id(id):
     return Group.objects.get(id=id)
 
 def get_all_active_students_from_group(group:Group):
-    return GroupStudent.students.filter(is_active=True)
+    return GroupStudent.objects.filter(is_active=True, group=group)
+
+def get_all_students_from_group(group:Group):
+    """guruhdan active studentlarni olish"""
+    students = []
+    for student in GroupStudent.objects.filter(group=group):
+        students.append(student.student)
+    return students
+
+def get_group_students(group:Group):
+    return GroupStudent.objects.filter(group=group)
+
 
 def get_active_groups():
     """Hozirdagi mavjud guruhlarni olish"""
@@ -125,13 +136,11 @@ def get_inactive_groups():
 def get_all_groups_from_filial(filial:Filial, status=None):
     """Group modelidan barcha guruhlarni qaytaradi"""
 
-    if status is None or 0:
+    if status is None or status == '0':
         return Group.objects.filter(filial=filial)
     return Group.objects.filter(filial=filial, status=status)
 
-def get_active_students_from_group(group:Group):
-    """guruhdan active studentlarni olish"""
-    return group.students.filter(is_iactive=True)
+
 
 # funks for group_student model end
 

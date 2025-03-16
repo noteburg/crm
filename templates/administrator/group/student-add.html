@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+{% endblock css %}
+
+{% block content %}
+<div class="content">
+    <div class="container mt-5">
+        <!-- Tugmalar -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link text-body" aria-selected="false" href="{% url 'administrator:create-student-group' group_id.id %}">Yangi o'quvchi yaratish</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-primary" id="form2-tab" data-toggle="tab" href="#form2" role="tab"
+                   aria-controls="form2" aria-selected="true">Guruhdan tanlash</a>
+            </li>
+        </ul>
+
+        <!-- Formalar -->
+        <div class="tab-content mt-3" id="myTabContent">
+            <!-- Form 1 -->
+            <div class="tab-pane fade" id="form1" role="tabpanel" aria-labelledby="form1-tab">
+                <div class="animated fadeIn">
+                    <div class="row">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form 2 -->
+            <div class="tab-pane fade show active" id="form2" role="tabpanel" aria-labelledby="form2-tab">
+                <form method="get" action="">
+                    <div class="form-group">
+                        <label for="groupDropdown">Guruhni tanlang: </label>
+                        <select class="form-control" id="groupDropdown" name="group" onchange="this.form.submit()">
+                            <option value="0" {% if selected_group_id == 0 %} selected {% endif %}>Barcha</option>
+                            {% for group in groups %}
+                            <option value="{{ group.id }}" {% if selected_group_id == group.id %} selected {% endif %}>
+                                {{ group.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </form>
+                <!--    student create end     -->
+                <!-- Studentlar dropdown'i -->
+
+
+                <form action="{% url 'administrator:add-student-group' group_id.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                    <label for="studentDropdown">O'quvchini tanlang:</label>
+
+                    <select name="student" class="form-control" id="studentDropdown">
+                        {% for student in students %}
+                        <option value="{{ student.id }}">{{ student.first_name }}
+                           {{ student.last_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="row form-group">
+                                 <div class="col-4">
+                                  <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                      Saqlash
+                                  </button>
+                                 </div>
+                              </div>
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock js %}
+
+{% endblock content %}

@@ -18,7 +18,7 @@
                                 <form method="get" id="filterForm" class="form-inline mb-3">
                                     <label for="status" class="mr-2 font-weight-bold">Filter</label>
                                     <select name="status" id="status" class="form-control mr-2" onchange="document.getElementById('filterForm').submit();">
-                                        <option {% if status == '0' %}selected{% endif %} value="all" >All</option>
+                                        <option {% if status == '0' %}selected{% endif %} value="0" >All</option>
                                         <option {% if status == '1' %}selected{% endif %} value="1">Not Started</option>
                                         <option {% if status == '2' %}selected{% endif %} value="2" >Active</option>
                                         <option {% if status == '3' %}selected{% endif %} value="3" >Inactive</option>
@@ -44,14 +44,13 @@
                                     {% for group in groups %}
                                     <tr>
                                         <th scope="row">{{ forloop.counter }}</th>
-                                        <td>{{group.name}}</td>
-                                        <td>{{group.teacher}}</td>
-                                        <td>{{group.lesson.name}}</td>
-                                        <td>{{group.lesson.lesson_type.type}}</td>
-                                        <td>{{group.get_status_display}}</td>
+                                        <td><a class="text-decoration-none text-primary" href="{% url 'administrator:table-group-students' group.id %}">{{ group.name }}</a></td>
+                                        <td>{{ group.teacher.first_name }} {{ group.teacher.last_name}}</td>
+                                        <td>{{ group.lesson.name }}</td>
+                                        <td>{{ group.lesson.lesson_type.type }}</td>
+                                        <td>{{ group.get_status_display }}</td>
                                         <td>
-                                            <a href="#"><span class="ti-pencil text-primary"></span></a>
-                                            <a href="#"><span class="ti-trash text-danger"></span></a>
+                                             <a href="{% url 'administrator:edit-group' group.id %}"><span class="ti-pencil text-primary"></span></a>
                                         </td>
 
 

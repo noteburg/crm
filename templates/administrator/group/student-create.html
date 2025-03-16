@@ -1,8 +1,29 @@
 {% extends 'base.html' %}
 
+{% block css %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+{% endblock css %}
+
 {% block content %}
-        <div class="content">
-        <div class="animated fadeIn">
+<div class="content">
+<div class="container mt-5">
+        <!-- Tugmalar -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active text-primary" id="form1-tab" data-toggle="tab" href="#form1" role="tab" aria-controls="form1" aria-selected="false">Yangi o'quvchi yaratish</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-body" href="{% url 'administrator:add-student-group' selected_group.id %}">Guruhdan tanlash</a>
+            </li>
+        </ul>
+
+        <!-- Formalar -->
+        <div class="mt-3" id="myTabContent">
+            <!-- Form 1 -->
+            <div class="tab-pane" id="form1" role="tabpanel" aria-labelledby="form1-tab">
+                <div class="">
             <div class="row">
               <div class="col">
                   <div class="card">
@@ -10,7 +31,7 @@
                           <strong>O'quvchi yaratish</strong>
                       </div>
                       <div class="card-body card-block">
-                          <form action="{% url 'administrator:student-create' %}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                          <form action="{% url 'administrator:create-student-group' selected_group.id %}" method="post" enctype="multipart/form-data" class="form-horizontal">
                               {% csrf_token %}
 
                               <div class="row form-group">
@@ -35,18 +56,6 @@
                               </div>
 
                               <div class="row form-group">
-                                <div class="col col-md-3"><label for="group" class=" form-control-label">
-                                    Groups</label></div>
-                                <div class="col-12 col-md-9">
-                                    <select id="group" name="group" class="form-control">
-                                        {% for group in groups %}
-                                        <option value="{{ group.id }}">{{ group.name }}, {{ group.lesson.name }}, {{ group.lesson.lesson_type.type }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                              </div>
-
-                              <div class="row form-group">
                                  <div class="col-4">
                                   <button type="submit" class="btn btn-primary btn-lg btn-block">
                                       Saqlash
@@ -61,5 +70,15 @@
               </div>
             </div>
         </div>
+            </div>
+
+        </div>
     </div>
+</div>
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock js %}
+
 {% endblock content %}
