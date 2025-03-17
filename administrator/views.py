@@ -1,16 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
-from django.views.decorators.http import require_POST
-
 from . import service, forms, models
 
 from django.shortcuts import render, redirect
 from django.views import View, generic
+from django.contrib import messages
 
 from .service import set_student_to_group
 
-
-# Create your views here.
 
 class CreateStudentView(LoginRequiredMixin, View):
     def get(self, request):
@@ -36,10 +32,32 @@ class CreateStudentView(LoginRequiredMixin, View):
         return render(request, 'error.html')
 
 
+class EditStudentView(View):
+    def get(self, request, student_id):
+        student = service.get_student_with_id(student_id)
+        return render(request, 'administrator/student/edit.html', {'student':student})
+
+    def post(self, request, student_id):
+        student = service.get_student_with_id(student_id)
+        form = forms.StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Ma'lumot saqlandi")
+
+        return redirect('administrator:edit-student', student_id=student_id)
+
+
 class StudentTableView(LoginRequiredMixin, View):
     def get(self, request):
+        search_value = request.GET.get('search_value')
+        search_type = request.GET.get('search_type')
         filial = service.get_admin_filial(admin=request.user)
-        students = service.get_all_students_from_filial(filial)
+
+        if search_type and search_value:
+            students = service.search_student(filial, search_type, search_value)
+        else:
+            students = service.get_all_students_from_filial(filial)
+
         return render(request, 'administrator/student/table.html', {'students': students})
 
 

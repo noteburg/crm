@@ -63,6 +63,21 @@ def create_student(first_name:str, last_name:str, phone:str):
         )
         return True
 
+def search_student(filial:Filial ,search_type:str, value:str):
+    search_fields = {
+        'first_name': {'first_name__icontains': value},
+        'last_name': {'last_name__icontains': value},
+        'phone': {'phone': value},
+    }
+
+    # Agar search_type noto'g'ri kiritilgan bo'lsa, bo'sh queryset qaytarish
+    if search_type not in search_fields:
+        return Student.objects.none()
+
+    # Filter yaratish
+    filter_kwargs = {'filial': filial, **search_fields[search_type]}
+    return Student.objects.filter(**filter_kwargs)
+
 def set_student_to_group(student:Student, group:Group):
     if isinstance(student, Student) and isinstance(group, Group):
         GroupStudent.objects.create(

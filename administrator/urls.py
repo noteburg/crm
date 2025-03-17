@@ -6,10 +6,11 @@ app_name = 'administrator'
 
 urlpatterns = [
     path('student/create/', views.CreateStudentView.as_view(), name='student-create'),
+    path('student/<int:student_id>/edit/', views.EditStudentView.as_view(), name='edit-student'),
     path('student/table/', views.StudentTableView.as_view(), name='student-table'),
 
-    path('group/create', views.CreateGroupView.as_view(), name='create-group'),
-    path('group/<int:group_id>/edit', views.GroupEditView.as_view(), name='edit-group'),
+    path('group/create/', views.CreateGroupView.as_view(), name='create-group'),
+    path('group/<int:group_id>/edit/', views.GroupEditView.as_view(), name='edit-group'),
     path('group/table/', views.GroupTableView.as_view(), name='table-group'),
     path('group/<int:group_id>/students/', views.GroupStudentsTableView.as_view(), name='table-group-students'),
     path('group/<int:group_id>/set-active-student/', views.GroupStudentSetActive.as_view(), name='group-student-set-active'),
